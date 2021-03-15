@@ -18,11 +18,12 @@ namespace DI.LifeTimes.WebApp.Controllers
         public HomeController(
             ILogger<HomeController> logger,
             ISingletonOperation singletonOperation,
-            ITransientOperation transientOperation,
+            ITransientOperation transientOperation,            
             IScopedOperation scopedOperation,
             IMyService myService)
         {
             _singletonOperation = singletonOperation;
+
             _transientOperation = transientOperation;
             _scopedOperation = scopedOperation;
             _myService = myService;
@@ -32,6 +33,14 @@ namespace DI.LifeTimes.WebApp.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogWarning("Singleton: " + _singletonOperation.Id);
+            _logger.LogWarning("Transient: " + _transientOperation.Id);
+            _logger.LogWarning("Scoped: " + _scopedOperation.Id);
+
+            _logger.LogWarning("MyService Singleton: " + _myService.getSingleton()); ;
+            _logger.LogWarning("MyService Transient: " + _myService.getTransient());
+            _logger.LogWarning("MyService Scoped: " + _myService.getScoped());
+
             return View();
         }
 
